@@ -189,7 +189,7 @@ Methods that depend on the state of the XRP Ledger are unavailable in offline mo
 * [prepareEscrowExecution](#prepareescrowexecution)
 * [sign](#sign)
 * [generateAddress](#generateaddress)
-* [deriveAddress](#deriveAddress)
+* [deriveAddress](#deriveaddress)
 * [computeLedgerHash](#computeledgerhash)
 
 # Basic Types
