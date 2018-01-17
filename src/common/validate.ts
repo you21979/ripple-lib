@@ -104,6 +104,9 @@ _.partial(schemaValidate, 'computeLedgerHashParameters')
 export const generateAddress =
 _.partial(schemaValidate, 'generateAddressParameters')
 
+export const deriveAddress =
+_.partial(schemaValidate, 'deriveAddressParameters')
+
 export const signPaymentChannelClaim =
 _.partial(schemaValidate, 'signPaymentChannelClaimParameters')
 

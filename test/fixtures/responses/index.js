@@ -2,6 +2,7 @@
 
 module.exports = {
   generateAddress: require('./generate-address.json'),
+  deriveAddress: require('./derive-address.json'),
   getAccountInfo: require('./get-account-info.json'),
   getBalances: require('./get-balances.json'),
   getBalanceSheet: require('./get-balance-sheet.json'),
