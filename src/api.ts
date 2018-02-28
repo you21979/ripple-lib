@@ -18,6 +18,7 @@ import getOrders from './ledger/orders'
 import getOrderbook from './ledger/orderbook'
 import getSettings from './ledger/settings'
 import getAccountInfo from './ledger/accountinfo'
+import getAccountObjects from './ledger/accountobjects'
 import getPaymentChannel from './ledger/payment-channel'
 import preparePayment from './transaction/payment'
 import prepareTrustline from './transaction/trustline'
@@ -238,6 +239,7 @@ class RippleAPI extends EventEmitter {
   getOrderbook = getOrderbook
   getSettings = getSettings
   getAccountInfo = getAccountInfo
+  getAccountObjects = getAccountObjects
   getPaymentChannel = getPaymentChannel
   getLedger = getLedger
 
