@@ -18,7 +18,6 @@ import getOrders from './ledger/orders'
 import getOrderbook from './ledger/orderbook'
 import getSettings from './ledger/settings'
 import getAccountInfo from './ledger/accountinfo'
-import getAccountObjects from './ledger/accountobjects'
 import getPaymentChannel from './ledger/payment-channel'
 import preparePayment from './transaction/payment'
 import prepareTrustline from './transaction/trustline'
@@ -44,6 +43,7 @@ import verifyPaymentChannelClaim from './offline/verify-payment-channel-claim'
 import getLedger from './ledger/ledger'
 
 import {
+  AccountObjectsRequest, AccountObjectsResponse,
   AccountOffersRequest, AccountOffersResponse,
   AccountInfoRequest, AccountInfoResponse,
   AccountLinesRequest, AccountLinesResponse,
@@ -168,7 +168,8 @@ class RippleAPI extends EventEmitter {
 
   /**
    * Returns objects owned by an account.
-   * For an account's trust lines and balances, see `getTrustlines` and `getBalances`.
+   * For an account's trust lines and balances,
+   * see `getTrustlines` and `getBalances`.
    */
   async requestAll(command: 'account_objects', params: AccountObjectsRequest):
   Promise<AccountObjectsResponse[]>
@@ -256,7 +257,6 @@ class RippleAPI extends EventEmitter {
   getOrderbook = getOrderbook
   getSettings = getSettings
   getAccountInfo = getAccountInfo
-  getAccountObjects = getAccountObjects
   getPaymentChannel = getPaymentChannel
   getLedger = getLedger
 
