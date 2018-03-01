@@ -171,11 +171,13 @@ class RippleAPI extends EventEmitter {
    * For an account's trust lines and balances,
    * see `getTrustlines` and `getBalances`.
    */
-  async requestAll(command: 'account_objects', params: AccountObjectsRequest):
-  Promise<AccountObjectsResponse[]>
-  async requestAll(args):
-  Promise<AccountObjectsResponse[]> {
-    return (<Function>this._requestAll)(...args)
+  async requestAll(
+    command: 'account_objects',
+    params: AccountObjectsRequest
+  ): Promise<AccountObjectsResponse[]> {
+    return (<Function>this._requestAll)(command, params, {
+      collect: 'account_objects'
+    })
   }
 
   /**
