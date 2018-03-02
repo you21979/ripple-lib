@@ -1,13 +1,15 @@
 import * as _ from 'lodash'
 import {EventEmitter} from 'events'
 import {Connection, errors, validate} from './common'
-import * as server from './server/server'
-const connect = server.connect
-const disconnect = server.disconnect
-const getServerInfo = server.getServerInfo
-const getFee = server.getFee
-const isConnected = server.isConnected
-const getLedgerVersion = server.getLedgerVersion
+import {
+  connect,
+  disconnect,
+  isConnected,
+  getServerInfo,
+  getFee,
+  getLedgerVersion,
+  formatLedgerClose
+} from './server/server'
 import getTransaction from './ledger/transaction'
 import getTransactions from './ledger/transactions'
 import getTrustlines from './ledger/trustlines'
@@ -59,7 +61,7 @@ import * as ledgerUtils from './ledger/utils'
 import * as schemaValidator from './common/schema-validator'
 import {clamp} from './ledger/utils'
 
-type APIOptions = {
+export type APIOptions = {
   server?: string,
   feeCushion?: number,
   trace?: boolean,
@@ -85,7 +87,7 @@ function getCollectKeyFromCommand(command: string): string|undefined {
 }
 
 // prevent access to non-validated ledger versions
-class RestrictedConnection extends Connection {
+export class RestrictedConnection extends Connection {
   request(request: any, timeout?: number) {
     const ledger_index = request.ledger_index
     if (ledger_index !== undefined && ledger_index !== 'validated') {
@@ -120,7 +122,7 @@ class RippleAPI extends EventEmitter {
     if (serverURL !== undefined) {
       this.connection = new RestrictedConnection(serverURL, options)
       this.connection.on('ledgerClosed', message => {
-        this.emit('ledger', server.formatLedgerClose(message))
+        this.emit('ledger', formatLedgerClose(message))
       })
       this.connection.on('error', (errorCode, errorMessage, data) => {
         this.emit('error', errorCode, errorMessage, data)
