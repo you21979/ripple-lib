@@ -177,8 +177,25 @@ class RippleAPI extends EventEmitter {
     command: 'account_objects',
     params: AccountObjectsRequest
   ): Promise<AccountObjectsResponse[]> {
-    return (<Function>this._requestAll)(command, params, {
+    // TODO: Prevent access to non-validated ledger versions
+    const results = await (<Function>this._requestAll)(command, params, {
       collect: 'account_objects'
+    })
+
+    return results.reduce((result, singleResult) => {
+      const invariants = ['account', 'ledger_hash',
+        'ledger_index', 'ledger_current_index', 'validated']
+
+      invariants.forEach(field => {
+        if (result[field] !== singleResult[field]) {
+          throw new errors.UnexpectedError(
+            `paginated response contains mismatched ${field}: ` +
+            `${result[field]} !== ${singleResult[field]}`
+          )
+        }
+      })
+
+      result.account_objects.push(singleResult.account_objects)
     })
   }
 
