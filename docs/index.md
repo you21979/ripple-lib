@@ -298,7 +298,7 @@ Executing a transaction with `RippleAPI` requires the following four steps:
     * [prepareCheckCash](#preparecheckcash)
 2. [Sign](#sign) - Cryptographically sign the transaction locally and save the [transaction ID](#transaction-id). Signing is how the owner of an account authorizes a transaction to take place. For multisignature transactions, the `signedTransaction` fields returned by `sign` must be collected and passed to the [combine](#combine) method.
 3. [Submit](#submit) - Submit the transaction to the connected server.
-4. Verify - Verify that the transaction got validated by querying with [getTransaction](#gettransaction). This is necessary because transactions may fail even if they were successfully submitted.
+4. [Verify](https://ripple.com/build/rippleapi-beginners-guide/#waiting-for-validation) - Verify that the transaction got validated by querying with [getTransaction](#gettransaction). This is necessary because transactions may fail even if they were successfully submitted.
 
 ## Transaction Fees
 
@@ -331,6 +331,8 @@ We recommended that you specify a `maxLedgerVersion` so that you can quickly det
 A transaction ID is a 64-bit hexadecimal string that uniquely identifies the transaction. The transaction ID is derived from the transaction instruction and specifications, using a strong hash function.
 
 You can look up a transaction by ID using the [getTransaction](#gettransaction) method.
+
+Note that if you change any aspect of a transaction, such as increasing its fee or maxLedgerVersion, it will have a different transaction ID. This can occur if your application implements transaction resubmission logic.
 
 ## Transaction Memos
 
