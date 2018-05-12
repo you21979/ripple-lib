@@ -3,9 +3,9 @@ import * as utils from './utils'
 const validate = utils.common.validate
 const ValidationError = utils.common.errors.ValidationError
 import {Instructions, Prepare} from './types'
-import {Memo} from '../common/types'
+import {Memo} from '../common/types/objects'
 
-type EscrowExecution = {
+export type EscrowExecution = {
   owner: string,
   escrowSequence: number,
   memos?: Array<Memo>,

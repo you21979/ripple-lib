@@ -50,8 +50,12 @@ function getWebpackConfig(extension, overrides) {
         use: 'null',
       }, {
         test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            compilerOptions: {declaration: false}
+          },
+        }],
       }, {
         test: /\.json/,
         use: 'json-loader',

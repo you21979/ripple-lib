@@ -2,15 +2,15 @@ import * as _ from 'lodash'
 import * as assert from 'assert'
 import * as common from '../common'
 import {Connection} from '../common'
-import {TransactionType} from './transaction-types'
-import {Issue} from '../common/types'
+import {FormattedTransactionType} from '../transaction/types'
+import {Issue} from '../common/types/objects'
 
-type RecursiveData = {
+export type RecursiveData = {
   marker: string,
   results: Array<any>
 }
 
-type Getter = (marker?: string, limit?: number) => Promise<RecursiveData>
+export type Getter = (marker?: string, limit?: number) => Promise<RecursiveData>
 
 function clamp(value: number, min: number, max: number): number {
   assert(min <= max, 'Illegal clamp bounds')
@@ -59,7 +59,7 @@ function renameCounterpartyToIssuer<T>(
   return withIssuer
 }
 
-type RequestBookOffersArgs = {taker_gets: Issue, taker_pays: Issue}
+export type RequestBookOffersArgs = {taker_gets: Issue, taker_pays: Issue}
 
 function renameCounterpartyToIssuerInOrder(order: RequestBookOffersArgs) {
   const taker_gets = renameCounterpartyToIssuer(order.taker_gets)
@@ -78,7 +78,8 @@ function signum(num) {
  *  them based on TransactionIndex
  *  See: https://ripple.com/build/transactions/
  */
-function compareTransactions(first: TransactionType, second: TransactionType
+function compareTransactions(
+  first: FormattedTransactionType, second: FormattedTransactionType
 ): number {
   if (!first.outcome || !second.outcome) {
     return 0

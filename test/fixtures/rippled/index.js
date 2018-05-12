@@ -16,7 +16,12 @@ module.exports = {
   },
   empty: require('./empty'),
   subscribe: require('./subscribe'),
+  subscribe_error: require('./subscribe_error'),
   unsubscribe: require('./unsubscribe'),
+  account_objects: {
+    normal: require('./account-objects'),
+    // notfound: require('./account-objects-not-found')
+  },
   account_info: {
     normal: require('./account-info'),
     notfound: require('./account-info-not-found')
@@ -32,6 +37,10 @@ module.exports = {
     fabric: require('./book-offers'),
     usd_xrp: require('./book-offers-usd-xrp'),
     xrp_usd: require('./book-offers-xrp-usd')
+  },
+  ledger_data: {
+    first_page: require('./ledger-data-first-page'),
+    last_page: require('./ledger-data-last-page')
   },
   ledger_entry: {
     error: require('./ledger-entry-error')
@@ -72,6 +81,9 @@ module.exports = {
     LedgerWithoutTime: require('./tx/ledger-without-time.json'),
     NotValidated: require('./tx/not-validated.json'),
     OfferWithExpiration: require('./tx/order-with-expiration.json'),
+    CheckCreate: require('./tx/check-create.json'),
+    CheckCancel: require('./tx/check-cancel.json'),
+    CheckCash: require('./tx/check-cash.json'),
     EscrowCreation: require('./tx/escrow-creation.json'),
     EscrowCancellation:
       require('./tx/escrow-cancellation.json'),
