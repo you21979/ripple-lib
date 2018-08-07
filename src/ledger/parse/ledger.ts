@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import {removeUndefined, rippleTimeToISO8601} from '../../common'
 import parseTransaction from './transaction'
 import {Ledger} from '../../common/types/objects'
@@ -25,11 +24,11 @@ export type FormattedLedger = {
 }
 
 function parseTransactionWrapper(ledgerVersion, tx) {
-  const transaction = _.assign({}, _.omit(tx, 'metaData'), {
-    meta: tx.metaData,
-    ledger_index: ledgerVersion
-  })
-  const result = parseTransaction(transaction)
+  tx = JSON.parse(JSON.stringify(tx))
+  tx.meta = tx.metaData
+  delete tx.metaData
+  tx.ledger_index = ledgerVersion
+  const result = parseTransaction(tx)
   if (!result.outcome.ledgerVersion) {
     result.outcome.ledgerVersion = ledgerVersion
   }
@@ -37,24 +36,28 @@ function parseTransactionWrapper(ledgerVersion, tx) {
 }
 
 function parseTransactions(transactions, ledgerVersion) {
-  if (_.isEmpty(transactions)) {
+  if (!transactions || transactions.length === 0) {
     return {}
   }
-  if (_.isString(transactions[0])) {
+  if (typeof transactions[0] === 'string') {
     return {transactionHashes: transactions}
   }
+  const parseTransactionWithPredefinedLedgerVersion = tx =>
+    parseTransactionWrapper(ledgerVersion, tx)
+  const parsedTransactions = transactions.map(tx =>
+    parseTransactionWithPredefinedLedgerVersion(tx)
+  )
   return {
-    transactions: _.map(transactions,
-      _.partial(parseTransactionWrapper, ledgerVersion)),
+    transactions: parsedTransactions,
     rawTransactions: JSON.stringify(transactions)
   }
 }
 
 function parseState(state) {
-  if (_.isEmpty(state)) {
+  if (!state || state.length === 0) {
     return {}
   }
-  if (_.isString(state[0])) {
+  if (typeof state[0] === 'string') {
     return {stateHashes: state}
   }
   return {rawState: JSON.stringify(state)}
