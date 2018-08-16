@@ -69,7 +69,11 @@ import * as transactionUtils from './transaction/utils'
 import * as schemaValidator from './common/schema-validator'
 import {getServerInfo, getFee} from './common/serverinfo'
 import {clamp} from './ledger/utils'
-import {Instructions, Prepare} from './transaction/types'
+import {
+  FormattedTransactionType,
+  Instructions,
+  Prepare
+} from './transaction/types'
 
 export type APIOptions = {
   server?: string,
@@ -333,5 +337,6 @@ class RippleAPI extends EventEmitter {
 }
 
 export {
-  RippleAPI
+  RippleAPI,
+  FormattedTransactionType
 }
