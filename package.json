@@ -71,7 +71,8 @@
     "lint": "tslint -p ./",
     "perf": "./scripts/perf_test.sh",
     "start": "node scripts/http.js",
-    "sauce": "node scripts/sauce-runner.js"
+    "sauce": "node scripts/sauce-runner.js",
+    "testfeatures": "tsc --project ./test/features && node ./test/features/build/DepositPreauth.js"
   },
   "repository": {
     "type": "git",
