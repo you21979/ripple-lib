@@ -24,6 +24,8 @@ function signWithKeypair(
   }
 ): { signedTransaction: string; id: string } {
   validate.sign({txJSON, keypair})
+  console.log('skipping validation:', txJSON)
+  console.log('keypair:', keypair)
 
   const tx = JSON.parse(txJSON)
   if (tx.TxnSignature || tx.Signers) {
@@ -79,6 +81,12 @@ function sign(
       options
     )
   } else {
+    if (!keypair && !secret) {
+      // Clearer message than 'ValidationError: instance is not exactly one from [subschema 0],[subschema 1]'
+      throw new utils.common.errors.ValidationError(
+        'sign: Missing secret or keypair.'
+      )
+    }
     return signWithKeypair(
       this,
       txJSON,

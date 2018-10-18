@@ -1,4 +1,4 @@
-import * as assert from 'assert'
+// import * as assert from 'assert'
 import {parseOutcome} from './utils'
 import {removeUndefined} from '../../common'
 import parsePayment from './payment'
@@ -42,6 +42,7 @@ function parseTransactionType(type) {
   return mapping[type] || null
 }
 
+// includeRawTransaction: undefined by default (getTransaction)
 function parseTransaction(tx: any, includeRawTransaction: boolean): any {
   const type = parseTransactionType(tx.TransactionType)
   const mapping = {
@@ -63,8 +64,15 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): any {
     'amendment': parseAmendment
   }
   const parser: Function = mapping[type]
-  assert(parser !== undefined, 'Unrecognized transaction type')
-  const specification = parser(tx)
+
+  const specification = parser ? parser(tx) : {
+    UNAVAILABLE: 'Unrecognized transaction type.',
+    SEE_RAW_TRANSACTION: 'Since this type is unrecognized, `rawTransaction` is included in this response.'
+  }
+  if (!parser) {
+    includeRawTransaction = true
+  }
+
   const outcome = parseOutcome(tx)
   return removeUndefined({
     type: type,
