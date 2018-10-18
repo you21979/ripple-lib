@@ -12,6 +12,7 @@ import parseEscrowCancellation from './escrow-cancellation'
 import parseCheckCreate from './check-create'
 import parseCheckCash from './check-cash'
 import parseCheckCancel from './check-cancel'
+import parseDepositPreauth from './deposit-preauth'
 import parsePaymentChannelCreate from './payment-channel-create'
 import parsePaymentChannelFund from './payment-channel-fund'
 import parsePaymentChannelClaim from './payment-channel-claim'
@@ -19,25 +20,28 @@ import parseFeeUpdate from './fee-update'
 import parseAmendment from './amendment'
 
 function parseTransactionType(type) {
+  // Ordering matches https://developers.ripple.com/transaction-types.html
   const mapping = {
-    Payment: 'payment',
-    TrustSet: 'trustline',
-    OfferCreate: 'order',
-    OfferCancel: 'orderCancellation',
     AccountSet: 'settings',
-    SetRegularKey: 'settings',
+    CheckCancel: 'checkCancel',
+    CheckCash: 'checkCash',
+    CheckCreate: 'checkCreate',
+    DepositPreauth: 'depositPreauth',
+    EscrowCancel: 'escrowCancellation',
     EscrowCreate: 'escrowCreation',
     EscrowFinish: 'escrowExecution',
-    EscrowCancel: 'escrowCancellation',
-    CheckCreate: 'checkCreate',
-    CheckCash: 'checkCash',
-    CheckCancel: 'checkCancel',
+    OfferCancel: 'orderCancellation',
+    OfferCreate: 'order',
+    Payment: 'payment',
+    PaymentChannelClaim: 'paymentChannelClaim',
     PaymentChannelCreate: 'paymentChannelCreate',
     PaymentChannelFund: 'paymentChannelFund',
-    PaymentChannelClaim: 'paymentChannelClaim',
+    SetRegularKey: 'settings',
     SignerListSet: 'settings',
-    SetFee: 'feeUpdate', // pseudo-transaction
-    EnableAmendment: 'amendment' // pseudo-transaction
+    TrustSet: 'trustline',
+
+    EnableAmendment: 'amendment', // pseudo-transaction
+    SetFee: 'feeUpdate' // pseudo-transaction
   }
   return mapping[type] || null
 }
@@ -57,6 +61,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): any {
     'checkCreate': parseCheckCreate,
     'checkCash': parseCheckCash,
     'checkCancel': parseCheckCancel,
+    'depositPreauth': parseDepositPreauth,
     'paymentChannelCreate': parsePaymentChannelCreate,
     'paymentChannelFund': parsePaymentChannelFund,
     'paymentChannelClaim': parsePaymentChannelClaim,
