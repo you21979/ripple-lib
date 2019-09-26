@@ -34,6 +34,8 @@ function loadSchemas() {
     require('./schemas/objects/destination-address-tag.json'),
     require('./schemas/objects/transaction-hash.json'),
     require('./schemas/objects/address.json'),
+    require('./schemas/objects/x-address.json'),
+    require('./schemas/objects/classic-address.json'),
     require('./schemas/objects/adjustment.json'),
     require('./schemas/objects/quality.json'),
     require('./schemas/objects/amount.json'),

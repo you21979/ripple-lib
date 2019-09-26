@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "classicAddress",
+  "description": "A classic address (Account ID) for the XRP Ledger",
+  "type": "string",
+  "pattern": "^r[1-9A-HJ-NP-Za-km-z]{24,34}$"
+}

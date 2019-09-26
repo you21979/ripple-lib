@@ -996,7 +996,7 @@ describe('RippleAPI', function () {
         done(new Error('Expected method to reject. Prepared transaction: ' + JSON.stringify(response)));
       }).catch(err => {
         assert.strictEqual(err.name, 'ValidationError');
-        assert.strictEqual(err.message, 'instance.Account is not of a type(s) string,instance.Account does not conform to the "address" format');
+        assert.strictEqual(err.message, 'instance.Account is not of a type(s) string,instance.Account is not exactly one from <xAddress>,<classicAddress>');
         done();
       }).catch(done); // Finish test with assertion failure immediately instead of waiting for timeout.
     } catch (err) {
