@@ -3,5 +3,6 @@
   "title": "classicAddress",
   "description": "A classic address (Account ID) for the XRP Ledger",
   "type": "string",
+  "format": "classicAddress",
   "pattern": "^r[1-9A-HJ-NP-Za-km-z]{24,34}$"
 }

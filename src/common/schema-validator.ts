@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as assert from 'assert'
 const {Validator} = require('jsonschema')
 import {ValidationError} from './errors'
-import {isValidAddress} from 'ripple-address-codec'
+import {isValidAddress, isValidXAddress} from 'ripple-address-codec'
 import {isValidSecret} from './utils'
 
 function loadSchemas() {
@@ -128,12 +128,23 @@ function loadSchemas() {
   // Register custom format validators that ignore undefined instances
   // since jsonschema will still call the format validator on a missing
   // (optional)  property
-  validator.customFormats.address = function(instance) {
+
+  // This relies on "format": "xAddress" in `x-address.json`!
+  validator.customFormats.xAddress = function(instance) {
+    if (instance === undefined) {
+      return true
+    }
+    return isValidXAddress(instance)
+  }
+
+  // This relies on "format": "classicAddress" in `classic-address.json`!
+  validator.customFormats.classicAddress = function(instance) {
     if (instance === undefined) {
       return true
     }
     return isValidAddress(instance)
   }
+
   validator.customFormats.secret = function(instance) {
     if (instance === undefined) {
       return true
