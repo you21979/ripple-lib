@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as assert from 'assert'
 const {Validator} = require('jsonschema')
 import {ValidationError} from './errors'
-import {isValidAddress, isValidXAddress} from 'ripple-address-codec'
+import {isValidClassicAddress, isValidXAddress} from 'ripple-address-codec'
 import {isValidSecret} from './utils'
 
 function loadSchemas() {
@@ -169,6 +169,10 @@ function schemaValidate(schemaName: string, object: any): void {
   if (!result.valid) {
     throw new ValidationError(result.errors.join())
   }
+}
+
+function isValidAddress(address: string): boolean {
+  return isValidXAddress(address) || isValidClassicAddress(address)
 }
 
 export {

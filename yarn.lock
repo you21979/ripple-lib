@@ -4110,10 +4110,10 @@ ripple-address-codec@^3.0.4:
     base-x "3.0.4"
     create-hash "^1.1.2"
 
-ripple-address-codec@^4.0.0-b4:
-  version "4.0.0-b4"
-  resolved "https://registry.yarnpkg.com/ripple-address-codec/-/ripple-address-codec-4.0.0-b4.tgz#619fa54c37dc6b3c88cf73ec264ccb31d2a3b0d3"
-  integrity sha512-jWQoYUf8P9l5GoppvhhjL9izFYAklrBS6wJFXjI6nes9Pk1/xG5fHq0MqLVjKBeuR9y6uEKSCEyykh+Mf/VaEg==
+ripple-address-codec@^4.0.0-b6:
+  version "4.0.0-b6"
+  resolved "https://registry.yarnpkg.com/ripple-address-codec/-/ripple-address-codec-4.0.0-b6.tgz#1ab91b0c929e1c65265a8ef608a9c4fbedc966bf"
+  integrity sha512-bJ8sii3iZT4JQ638vO7HxI8gZJp7nlnqVWqqq/ABaAJBqJj2Q1XgSOsAyf1DyX49LzfvFDjxPvcAiA6lWyAs2g==
   dependencies:
     "@types/base-x" "^3.0.0"
     base-x "3.0.4"

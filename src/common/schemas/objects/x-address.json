@@ -4,5 +4,6 @@
   "description": "An XRP Ledger address in X-address format",
   "type": "string",
   "format": "xAddress",
+  "link": "x-address",
   "pattern": "^[XT][1-9A-HJ-NP-Za-km-z]{46}$"
 }

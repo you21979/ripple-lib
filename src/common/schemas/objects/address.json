@@ -3,6 +3,7 @@
   "title": "address",
   "type": "string",
   "format": "address",
+  "link": "address",
   "oneOf": [
     {"$ref": "xAddress"},
     {"$ref": "classicAddress"}
