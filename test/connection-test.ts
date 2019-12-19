@@ -256,22 +256,6 @@ describe('Connection', function() {
   })
 
   describe('reconnection test', function() {
-    beforeEach(function() {
-      this.api.connection.__workingUrl = this.api.connection._url
-      this.api.connection.__doReturnBad = function() {
-        this._url = this.__badUrl
-        const self = this
-        function onReconnect(num) {
-          if (num >= 2) {
-            self._url = self.__workingUrl
-            self.removeListener('reconnecting', onReconnect)
-          }
-        }
-        this.on('reconnecting', onReconnect)
-      }
-    })
-
-    afterEach(function() {})
 
     it('reconnect on several unexpected close', function(done) {
       if (isBrowser) {
@@ -284,9 +268,7 @@ describe('Connection', function() {
       }
       this.timeout(70001)
       const self = this
-      self.api.connection.__badUrl = 'ws://testripple.circleci.com:129'
       function breakConnection() {
-        self.api.connection.__doReturnBad()
         self.api.connection._send(
           JSON.stringify({
             command: 'test_command',
@@ -323,11 +305,11 @@ describe('Connection', function() {
                   ' instead)'
               )
             )
-          } else if (reconnectsCount !== num * 2) {
+          } else if (reconnectsCount !== num) {
             done(
               new Error(
                 'reconnectsCount must be equal to ' +
-                  num * 2 +
+                  num +
                   ' (got ' +
                   reconnectsCount +
                   ' instead)'
@@ -571,36 +553,4 @@ describe('Connection', function() {
     }
   )
 
-  it('should try to reconnect on empty subscribe response on reconnect', function(done) {
-    this.timeout(23000)
-
-    this.api.on('error', error => {
-      done(error || new Error('Should not emit error.'))
-    })
-    let disconnectedCount = 0
-    this.api.on('connected', () => {
-      done(
-        disconnectedCount !== 1
-          ? new Error('Wrong number of disconnects')
-          : undefined
-      )
-    })
-    this.api.on('disconnected', () => {
-      disconnectedCount++
-    })
-
-    this.api.connection._send(
-      JSON.stringify({
-        command: 'global_config',
-        data: {returnEmptySubscribeRequest: 3}
-      })
-    )
-
-    this.api.connection._send(
-      JSON.stringify({
-        command: 'test_command',
-        data: {disconnectIn: 10}
-      })
-    )
-  })
 })

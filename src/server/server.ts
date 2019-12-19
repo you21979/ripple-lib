@@ -9,12 +9,12 @@ function getLedgerVersion(this: RippleAPI): Promise<number> {
   return this.connection.getLedgerVersion()
 }
 
-function connect(this: RippleAPI): Promise<void> {
-  return this.connection.connect()
+async function connect(this: RippleAPI): Promise<void> {
+  await this.connection.connect()
 }
 
-function disconnect(this: RippleAPI): Promise<void> {
-  return this.connection.disconnect()
+async function disconnect(this: RippleAPI): Promise<void> {
+  await this.connection.disconnect()
 }
 
 function formatLedgerClose(ledgerClose: any): object {
